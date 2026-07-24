@@ -100,19 +100,19 @@ with st.sidebar:
 
     st.markdown("""
     <div class="agent-card">
-        <h4>🧠 Agent 1 — Planner</h4>
+        <h4> Agent 1 — Planner</h4>
         <p>Breaks topic into focused sub-questions</p>
     </div>
     <div class="agent-card">
-        <h4>🔍 Agent 2 — Researcher</h4>
+        <h4> Agent 2 — Researcher</h4>
         <p>Searches the web via Tavily API</p>
     </div>
     <div class="agent-card">
-        <h4>✍️ Agent 3 — Summarizer</h4>
+        <h4> Agent 3 — Summarizer</h4>
         <p>Condenses raw results into summaries</p>
     </div>
     <div class="agent-card">
-        <h4>📄 Agent 4 — Writer</h4>
+        <h4> Agent 4 — Writer</h4>
         <p>Writes the final structured report</p>
     </div>
     """, unsafe_allow_html=True)
@@ -121,7 +121,7 @@ with st.sidebar:
     st.caption("Built with LangGraph · Gemini API · Tavily Search")
 
     # Research history in sidebar
-    st.subheader("📚 Recent Topics")
+    st.subheader(" Recent Topics")
     if "history" not in st.session_state:
         st.session_state.history = []
     if st.session_state.history:
@@ -147,7 +147,7 @@ with col1:
         label_visibility="collapsed"
     )
 with col2:
-    run_button = st.button("🚀 Research", type="primary", use_container_width=True)
+    run_button = st.button(" Research", type="primary", use_container_width=True)
 
 if run_button:
     if not topic.strip():
@@ -158,7 +158,7 @@ if run_button:
             st.session_state.history.append(topic)
 
         with st.status("🔄 Running agent pipeline...", expanded=True) as status:
-            st.write("🧠 Agent 1 (Planner) — Generating sub-questions...")
+            st.write(" Agent 1 (Planner) — Generating sub-questions...")
             start_time = time.time()
 
             research_graph = build_research_graph()
@@ -172,10 +172,10 @@ if run_button:
 
             final_state = research_graph.invoke(initial_state)
             elapsed = round(time.time() - start_time, 1)
-            status.update(label=f"✅ Research complete in {elapsed}s!", state="complete")
+            status.update(label=f" Research complete in {elapsed}s!", state="complete")
 
         # Metrics row
-        st.subheader("📊 Research Stats")
+        st.subheader(" Research Stats")
         total_sources = sum(len(r["sources"]) for r in final_state["search_results"])
         word_count = len(final_state["final_report"].split())
         report_chars = len(final_state["final_report"])
@@ -209,20 +209,20 @@ if run_button:
         st.divider()
 
         # Agent Activity Log
-        st.subheader("📋 Agent Activity Log")
+        st.subheader(" Agent Activity Log")
 
-        with st.expander("🧠 Agent 1 — Planner Output", expanded=True):
+        with st.expander(" Agent 1 — Planner Output", expanded=True):
             for i, q in enumerate(final_state["sub_questions"], 1):
                 st.markdown(f"**{i}.** {q}")
 
-        with st.expander("🔍 Agent 2 — Researcher Output", expanded=False):
+        with st.expander(" Agent 2 — Researcher Output", expanded=False):
             for item in final_state["search_results"]:
                 st.markdown(f"**Q:** {item['question']}")
                 for s in item["sources"]:
                     st.markdown(f"- [{s['title']}]({s['url']})")
                 st.divider()
 
-        with st.expander("✍️ Agent 3 — Summarizer Output", expanded=False):
+        with st.expander(" Agent 3 — Summarizer Output", expanded=False):
             for item in final_state["summaries"]:
                 st.markdown(f"**Q:** {item['question']}")
                 st.info(item["summary"])
@@ -231,7 +231,7 @@ if run_button:
         st.divider()
 
         # Final report
-        st.subheader("📄 Final Research Report")
+        st.subheader(" Final Research Report")
         st.markdown(
             f'<div class="report-box">{final_state["final_report"]}</div>',
             unsafe_allow_html=True
@@ -241,9 +241,21 @@ if run_button:
 
         # Download
         st.download_button(
-            label="📥 Download Report (.txt)",
+            label=" Download Report (.txt)",
             data=final_state["final_report"],
             file_name=f"research_{topic[:30].replace(' ', '_')}.txt",
             mime="text/plain",
             key="download_report"
         )
+
+
+        # Footer
+        st.markdown("""
+        <hr style='border: 1px solid #2A2A4A; margin-top: 3rem;'>
+        <div style='text-align: center; padding: 1rem 0; color: #555; font-size: 0.8rem;'>
+            Built by <span style='color: #6C63FF; font-weight: 600;'>Tulaja Patil</span> 
+            &nbsp;·&nbsp; 
+            Powered by LangGraph · Gemini · Tavily
+        </div>
+        """, unsafe_allow_html=True)
+
