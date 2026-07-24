@@ -28,4 +28,7 @@ All 4 agents share a single state object managed by LangGraph — no agent calls
 - Stats per run: sources found, word count, time taken
 - Download final report as .txt
 
-## Project Structure
+## API Keys Needed
+
+- Google Gemini API — https://aistudio.google.com/apikey
+- Tavily Search API — https://tavily.com
