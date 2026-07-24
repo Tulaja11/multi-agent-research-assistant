@@ -8,7 +8,7 @@ from graph.research_graph import build_research_graph
 
 st.set_page_config(
     page_title="Multi-Agent Research Assistant",
-    page_icon="🔬",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -92,7 +92,7 @@ st.markdown("""
 with st.sidebar:
     st.markdown("""
     <div style='text-align:center; padding: 1rem 0;'>
-        <span style='font-size:2rem'>🔬</span>
+        <span style='font-size:2rem'></span>
         <h2 style='color:#6C63FF; margin:0.3rem 0'>Agent Pipeline</h2>
         <p style='color:#aaa; font-size:0.8rem'>4 AI agents collaborating</p>
     </div>
